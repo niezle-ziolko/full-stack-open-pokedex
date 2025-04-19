@@ -27,13 +27,19 @@ const PokemonPage = ({ previous, next }) => {
   const hiddenAbility = pokemon.abilities.find((ability) => ability.is_hidden === true)
 
   // eslint-disable-next-line no-console
-  console.log('hiddenAbility=', hiddenAbility)
+  console.log('hiddenAbility=', hiddenAbility);
+
   return (
     <>
       <div className="links">
-        {previous && <Link to={`/pokemon/${previous.name}`}>Previous</Link>}
-        <Link to="/">Home</Link>
-        {next && <Link to={`/pokemon/${previous.name}`}>Next</Link>}
+      <nav>
+        {previous && (
+          <Link to={`/pokemon/${previous.name}`}>Previous</Link>
+        )}
+        {next && (
+          <Link to={`/pokemon/${next.name}`}>Next</Link>
+        )}
+      </nav>
       </div>
       <div className={`pokemon-page pokemon-type-${type.name}`}>
         <div className="pokemon-image" style={{ backgroundImage: `url(${pokemon.sprites.front_default})` }} />
