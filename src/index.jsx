@@ -7,11 +7,10 @@ import {
 import App from './App'
 import './styles.css'
 
-// Tworzenie routera z flagami future
 const router = createBrowserRouter(
   [
     {
-      path: '/',
+      path: '*',
       element: <App />,
     },
   ],
