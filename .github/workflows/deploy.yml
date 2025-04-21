@@ -27,18 +27,11 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Notify Discord about successful deployment
-        uses: bmwant/discord-webhook-notify@v1.1
+        uses: rjstone/discord-webhook-notify@v1
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: '✅ Deployment to Cloudflare Pages was successful!'
-          username: 'GitHub Actions'
-          embed_color: '00FF00'
-          embed_title: 'Deployment Success'
-          embed_description: |
-            - **Commit SHA**: ${{ github.sha }}
-            - **Commit Author**: ${{ github.actor }}
-            - **Message**: ${{ github.event.head_commit.message }}
-          embed_footer: 'Deployment completed successfully.'
+          severity: info
+          details: '✅ Deployment to Cloudflare Pages was successful!'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   notify_failure:
     needs: deploy
@@ -46,15 +39,20 @@ jobs:
     if: ${{ failure() }}
     steps:
       - name: Notify Discord about failed deployment
-        uses: bmwant/discord-webhook-notify@v1.1
+        uses: rjstone/discord-webhook-notify@v1
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: '❌ Deployment to Cloudflare Pages failed. Please check the logs.'
-          username: 'GitHub Actions'
-          embed_color: 'FF0000'
-          embed_title: 'Deployment Failure'
-          embed_description: |
-            - **Commit SHA**: ${{ github.sha }}
-            - **Commit Author**: ${{ github.actor }}
-            - **Message**: ${{ github.event.head_commit.message }}
-          embed_footer: 'Deployment failed. Please review the logs.'
+          severity: error
+          details: '❌ Deployment to Cloudflare Pages failed. Please check the logs.'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+  notify_cancelled:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: ${{ cancelled() }}
+    steps:
+      - name: Notify Discord about cancelled deployment
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: warn
+          details: '⚠️ Deployment to Cloudflare Pages was cancelled.'
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
