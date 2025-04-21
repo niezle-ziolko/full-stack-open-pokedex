@@ -19,7 +19,7 @@ jobs:
       - name: Trigger Cloudflare Pages Deploy Hook
         if: ${{ github.event_name == 'push' }}
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.CLOUDFLARE_HOOK }}"
+          curl -X POST "${{ secrets.CLOUDFLARE_HOOK }}"
 
   notify_success:
     needs: deploy
@@ -31,7 +31,7 @@ jobs:
         with:
           severity: info
           details: '✅ Deployment to Cloudflare Pages was successful!'
-          webhookUrl: https://discord.com/api/webhooks/${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   notify_failure:
     needs: deploy
@@ -43,7 +43,7 @@ jobs:
         with:
           severity: error
           details: '❌ Deployment to Cloudflare Pages failed. Please check the logs.'
-          webhookUrl: https://discord.com/api/webhooks/${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   notify_cancelled:
     needs: deploy
@@ -55,4 +55,4 @@ jobs:
         with:
           severity: warn
           details: '⚠️ Deployment to Cloudflare Pages was cancelled.'
-          webhookUrl: https://discord.com/api/webhooks/${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
