@@ -18,4 +18,4 @@ jobs:
 
       - name: Trigger Render Deploy Hook
         run: |
-          curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+          curl https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.DEPLOY_HOOKS_KEY }}
