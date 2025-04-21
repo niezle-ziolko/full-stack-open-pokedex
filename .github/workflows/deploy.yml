@@ -19,4 +19,42 @@ jobs:
       - name: Trigger Cloudflare Pages Deploy Hook
         if: ${{ github.event_name == 'push' }}
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.DEPLOY_HOOKS_KEY }}"
+          curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.CLOUDFLARE_HOOK }}"
+
+  notify_success:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    steps:
+      - name: Notify Discord about successful deployment
+        uses: bmwant/discord-webhook-notify@v1.1
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          message: '✅ Deployment to Cloudflare Pages was successful!'
+          username: 'GitHub Actions'
+          embed_color: '00FF00'
+          embed_title: 'Deployment Success'
+          embed_description: |
+            - **Commit SHA**: ${{ github.sha }}
+            - **Commit Author**: ${{ github.actor }}
+            - **Message**: ${{ github.event.head_commit.message }}
+          embed_footer: 'Deployment completed successfully.'
+
+  notify_failure:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    steps:
+      - name: Notify Discord about failed deployment
+        uses: bmwant/discord-webhook-notify@v1.1
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          message: '❌ Deployment to Cloudflare Pages failed. Please check the logs.'
+          username: 'GitHub Actions'
+          embed_color: 'FF0000'
+          embed_title: 'Deployment Failure'
+          embed_description: |
+            - **Commit SHA**: ${{ github.sha }}
+            - **Commit Author**: ${{ github.actor }}
+            - **Message**: ${{ github.event.head_commit.message }}
+          embed_footer: 'Deployment failed. Please review the logs.'
