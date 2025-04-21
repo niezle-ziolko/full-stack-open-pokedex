@@ -27,11 +27,11 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Notify Discord about successful deployment
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: info
           details: '✅ Deployment to Cloudflare Pages was successful!'
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: https://discord.com/api/webhooks/${{ secrets.DISCORD_WEBHOOK }}
 
   notify_failure:
     needs: deploy
@@ -43,7 +43,7 @@ jobs:
         with:
           severity: error
           details: '❌ Deployment to Cloudflare Pages failed. Please check the logs.'
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: https://discord.com/api/webhooks/${{ secrets.DISCORD_WEBHOOK }}
 
   notify_cancelled:
     needs: deploy
@@ -55,4 +55,4 @@ jobs:
         with:
           severity: warn
           details: '⚠️ Deployment to Cloudflare Pages was cancelled.'
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: https://discord.com/api/webhooks/${{ secrets.DISCORD_WEBHOOK }}
