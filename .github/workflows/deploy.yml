@@ -1,4 +1,4 @@
-name: Deploy to Render
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -16,6 +16,6 @@ jobs:
       - name: Run tests
         run: npm install && npm test
 
-      - name: Trigger Render Deploy Hook
+      - name: Trigger Cloudflare Pages Deploy Hook
         run: |
           curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.DEPLOY_HOOKS_KEY }}"
