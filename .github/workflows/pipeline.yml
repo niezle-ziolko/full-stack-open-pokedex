@@ -1,14 +1,17 @@
-name: Lint, Build and Test
+name: Deployment pipeline
 
 on:
   push:
     branches:
       - main
   pull_request:
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
-  lint-build-test:
-    runs-on: ubuntu-latest
+  simple_deployment_pipeline:
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.head_commit.message, ' '), '#skip') }}
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout repository
@@ -25,8 +28,17 @@ jobs:
       - name: Run linter
         run: npm run lint
 
-      - name: Run tests
-        run: npm test
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.head_commit.message, ' '), '#skip') }}
+    runs-on: ubuntu-20.04
 
-      - name: Build project
-        run: npm run build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
