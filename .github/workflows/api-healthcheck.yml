@@ -1,8 +1,8 @@
 name: API Health Check
 
 on:
-  schedule:
-    - cron: '0 8 1 * *'
+  # schedule:
+  #  - cron: '0 8 1 * *'
   workflow_dispatch:
 
 env:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Send HTTP request to PokeAPI
         run: |
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://pokeapi.co/api/v2/pokemon/?limit=100)
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.API_URL }})
           echo "Status code: $RESPONSE"
           if [ "$RESPONSE" -ne 200 ]; then
             echo "PokeAPI is not healthy!"
