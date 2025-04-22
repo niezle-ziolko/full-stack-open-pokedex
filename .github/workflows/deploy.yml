@@ -39,7 +39,7 @@ jobs:
     if: ${{ failure() }}
     steps:
       - name: Notify Discord about failed deployment
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: error
           details: '❌ Deployment to Cloudflare Pages failed. Please check the logs.'
@@ -51,7 +51,7 @@ jobs:
     if: ${{ cancelled() }}
     steps:
       - name: Notify Discord about cancelled deployment
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: warn
           details: '⚠️ Deployment to Cloudflare Pages was cancelled.'
