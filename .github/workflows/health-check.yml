@@ -5,6 +5,9 @@ on:
     - cron: '0 8 1 * *'
   workflow_dispatch:
 
+env:
+  ENABLED: false
+
 jobs:
   ping-server:
     runs-on: ubuntu-latest
