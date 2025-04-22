@@ -19,7 +19,7 @@ jobs:
       - name: Trigger Cloudflare Pages Deploy Hook
         if: ${{ github.event_name == 'push' }}
         run: |
-          curl -X POST "${{ secrets.CLOUDFLARE_HOOK }}"
+          curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${{ secrets.CLOUDFLARE_HOOK }}"
 
   notify_success:
     needs: deploy
