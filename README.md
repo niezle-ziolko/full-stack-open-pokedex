@@ -534,30 +534,36 @@ Follow these steps to run the project locally:
 git clone https://github.com/niezle-ziolko/full-stack-open-pokedex
 ```
 
-2. Install the dependencies:
+2. Navigate to the project directory:
+
+```bash
+cd full-stack-open-pokedex
+```
+
+4. Install the dependencies:
 
 ```bash
 npm install
 ```
 
-3. Start test:
+5. Start test:
 
 ```bash
 npm run test
 ```
 
-4. Start eslint:
+6. Start eslint:
 
 ```bash
 npm run eslint
 ```
 
-5. Start e2e test:
+7. Start e2e test:
 
 ```bash
 npm run test:e2e
 ```
-6. Start production build: 
+8. Start production build: 
 
 ```bash
 npm run start-prod
