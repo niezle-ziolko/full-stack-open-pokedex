@@ -5,7 +5,7 @@ This project implements a continuous integration and deployment (CI/CD) workflow
 The production version of the application is available at the link: [View Here](https://full-stack-open-pokedex.pages.dev/)
 
 ## 📜 Certificate of Completion
-With the successful completion of assignments 11.1. through 10.21. of the tenth part of the Full Stack Open course, I received the following certificate from the University of Helsinki:
+With the successful completion of assignments 11.1. through 11.21. of the tenth part of the Full Stack Open course, I received the following certificate from the University of Helsinki:
 
 CI/CD Module Certificate: [View Certificate](https://studies.cs.helsinki.fi/stats/api/certificate/fs-cicd/en/5dda0bc700abcc41219c50eb2fe0f5cf)
 
